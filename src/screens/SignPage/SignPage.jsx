@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styles from './SingPage.module.css';
+import styles from './SignPage.module.css';
 import { Route, Routes } from 'react-router-dom';
-import MyButton from '../MyButton/MyButton';
+import MyButton from '../../MyButton/MyButton';
 
-const SingPage = () => {
+const SignPage = () => {
   const [login, setLogin] = useState('Login');
   const [password, setPassword] = useState('Password');
 
@@ -18,4 +18,4 @@ const SingPage = () => {
   );
 };
 
-export default SingPage;
+export default SignPage;

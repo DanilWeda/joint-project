@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './NewPage.module.css'
 import { Route, Routes } from 'react-router-dom'
-import MyButton from '../MyButton/MyButton'
+import MyButton from '../../MyButton/MyButton'
 import LoginPage from '../LoginPage/LoginPage'
 
 const NewPage = () => {

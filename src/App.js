@@ -1,8 +1,8 @@
 import './App.css';
-import NewPage from './NewPage/NewPage';
 import { Route, Routes } from 'react-router-dom';
-import LoginPage from './LoginPage/LoginPage';
-import SingPage from './SingPage/SingPage';
+import LoginPage from './screens/LoginPage/LoginPage';
+import SignPage from './screens/SignPage/SignPage';
+import NewPage from './screens/NewPage/NewPage';
 
 function App() {
 
@@ -11,7 +11,8 @@ function App() {
       <Routes>
         <Route path='/' element={<NewPage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/singin' element={<SingPage />} />
+        <Route path='/singin' element={<SignPage />} />
+        <Route path='/app' element={<SignPage />} />
         <Route path='*' element={<NewPage />} />
       </Routes>
     </div>
