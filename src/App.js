@@ -1,22 +1,31 @@
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import LoginPage from './screens/LoginPage/LoginPage';
-import SignPage from './screens/SignPage/SignPage';
-import NewPage from './screens/NewPage/NewPage';
+import './App.css'
+import { Route, Routes } from 'react-router-dom'
+import LoginPage from './screens/LoginPage/LoginPage'
+import SingUpPage from './screens/SingUpPage/SingUpPage'
+import NewPage from './screens/NewPage/NewPage'
+import styled from 'styled-components'
+
+const AppWrapper = styled.div`
+  box-sizing: border-box;
+  min-width: 100vh;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30vh;
+`
 
 function App() {
-
   return (
-    <div className='App'>
+    <AppWrapper>
       <Routes>
         <Route path='/' element={<NewPage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/singin' element={<SignPage />} />
-        <Route path='/app' element={<SignPage />} />
+        <Route path='/singup' element={<SingUpPage />} />
         <Route path='*' element={<NewPage />} />
       </Routes>
-    </div>
-  );
+    </AppWrapper>
+  )
 }
 
-export default App;
+export default App
