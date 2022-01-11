@@ -2,10 +2,10 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import Btn from '../MainBorder/Btn'
-import Logo from '../MainBorder/Logo'
-import Title from '../MainBorder/Title'
-import MainInput from './MainInput'
+import Btn from '../UI/MainBtn'
+import Logo from '../UI/MainLogo'
+import Title from '../UI/MainTitle'
+import MainInput from '../UI/MainInput'
 
 const StyledMainBorder = styled.div`
   width: 700px;
