@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import App from './screens';
 import { setUpStore } from './store/index';
@@ -26,10 +26,10 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<Router>
-				<>
+				<ThemeProvider theme={''}>
 					<Global />
 					<App />
-				</>,
+				</ThemeProvider>,
 			</Router>
 		</Provider>
 	</React.StrictMode>,
