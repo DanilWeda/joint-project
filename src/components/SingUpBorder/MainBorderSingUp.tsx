@@ -39,8 +39,8 @@ const MainBorderSingUp = () => {
 			<PositionInput>
 				<MainInput type={'email'} placeholder={'email'} height={'60px'} />
 				<MainInput type={'password'} placeholder={'password'} height={'60px'} />
-				<Btn height={'60px'} link={'/login'}>
-					Sing in
+				<Btn height={'60px'} link={'/'}>
+					Sign in
 				</Btn>
 			</PositionInput>
 		</StyledMainBorder>

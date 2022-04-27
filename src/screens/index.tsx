@@ -1,10 +1,7 @@
 import { FC } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LoginPage from './LoginPage/LoginPage';
-import NewUserPage from './NewUserPage/NewUserPage';
-import SingUpPage from './SignUpPage/SignUpPage';
+import SetupRoutes from './Routes/index';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;
@@ -19,12 +16,7 @@ const AppWrapper = styled.div`
 const App: FC = () => {
 	return (
 		<AppWrapper>
-			<Routes>
-				<Route path='/' element={<NewUserPage />} />
-				<Route path='/login' element={<LoginPage />} />
-				<Route path='/singup' element={<SingUpPage />} />
-				<Route path='*' element={<NewUserPage />} />
-			</Routes>
+			<SetupRoutes />
 		</AppWrapper>
 	);
 };

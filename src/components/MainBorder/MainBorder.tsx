@@ -32,7 +32,7 @@ const MainBorder: FC = () => {
 				<Btn width={'200px'} height={'60px'} link={'/login'}>
 					Log In
 				</Btn>
-				<Btn width={'200px'} height={'60px'} link={'/singup'}>
+				<Btn width={'200px'} height={'60px'} link={'/signup'}>
 					Sing Up
 				</Btn>
 			</PositionBtn>
