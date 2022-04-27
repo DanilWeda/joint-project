@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const StyledBtn = styled.button`
   width: ${({ width }) => width || '100%'};
@@ -21,14 +20,14 @@ const StyledBtn = styled.button`
   &:hover {
     background: #c9eeff;
   }
-`
+`;
 
 const Btn = ({ link, ...props }) => {
-  return (
-    <Link to={link}>
-      <StyledBtn {...props} />
-    </Link>
-  )
-}
+	return (
+		<Link to={link}>
+			<StyledBtn {...props} />
+		</Link>
+	);
+};
 
-export default Btn
+export default Btn;

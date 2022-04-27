@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledTitle = styled.h1`
   display: flex;
@@ -9,10 +9,10 @@ const StyledTitle = styled.h1`
   margin-top: 15px;
   color: ${({ color }) => color || '#000'};
   justify-self: ${({ justify }) => justify || 'center'};
-`
+`;
 
 const Title = (props) => {
-  return <StyledTitle {...props} />
-}
+	return <StyledTitle {...props} />;
+};
 
-export default Title
+export default Title;
