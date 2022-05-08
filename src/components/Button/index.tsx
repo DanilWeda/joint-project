@@ -4,15 +4,22 @@ import { Link } from 'react-router-dom';
 import { StyledButton } from './StyledButton';
 import { IProps } from './types';
 
-const Button: FC<IProps> = ({ children, link, ...props }) => {
+const Button: FC<IProps> = ({ children, link, onClick, ...props }) => {
 
 	return (
-
-		<Link to={link}>
-			<StyledButton {...props} >
-				{children}
-			</StyledButton >
-		</Link>
+		<>
+			{link ? (
+				<Link to={link}>
+					<StyledButton onClick={onClick} {...props} >
+						{children}
+					</StyledButton >
+				</Link>
+			) : (
+				<StyledButton onClick={onClick} {...props} >
+					{children}
+				</StyledButton >
+			)}
+		</>
 
 	);
 };
