@@ -17,10 +17,29 @@ export const Root = styled.div`
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
+	button:first-child {
+		display: flex;
+		width: 100%;
+		padding-left: 20px;
+	}
 `;
 
 export const Title = styled.h1`
 	font-size: 20px;
 	font-weight: 500;
 	margin-top: 1rem;
+`;
+
+export const BackButton = styled.button`
+	font-size: 1rem;
+	text-decoration: underline;
+	padding: 2px;
+	font-weight: 400;
+	margin-top: 1rem;
+	border: none;
+	background: none;
+	&:hover {
+		cursor: pointer;
+	};
+	display:${props => props.display};
 `;

@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { useAuth } from '../hooks/useAuth';
+import { paths } from '../routes/index';
 
 interface IProps {
 	children: ReactNode
@@ -14,7 +15,7 @@ const PublicPage: FC<IProps> = ({ children }) => {
 		<>
 			{
 				isAuth ? (
-					<Navigate to={'/todos'} />
+					<Navigate to={paths.todos} />
 				) : (
 					children
 				)

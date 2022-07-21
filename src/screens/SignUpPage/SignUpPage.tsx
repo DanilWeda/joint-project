@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useForm } from '../../hooks/useForm';
 import AuthLayout from '../../Layout/Auth';
 import { IUser } from '../../models/IUser';
+import { paths } from '../../routes/index';
 import { setUser } from '../../store/slices/userSlice';
 import { Wrapper } from './StyledSignUpPage';
 
@@ -30,7 +31,7 @@ const SignPage: FC = () => {
 					token: accessToken,
 				};
 				dispatch(setUser(tmpUser));
-				navigate('/todos');
+				navigate(paths.todos);
 			})
 			.catch(console.error);
 	};

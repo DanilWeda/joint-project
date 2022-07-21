@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useForm } from '../../hooks/useForm';
 import AuthLayout from '../../Layout/Auth';
 import { IUser } from '../../models/IUser';
+import { paths } from '../../routes/index';
 import { setUser } from '../../store/slices/userSlice';
 import { Wrapper } from './StyledLoginPage';
 
@@ -31,18 +32,22 @@ const LoginPage: FC = () => {
 					token: accessToken,
 				};
 				dispatch(setUser(tmpUser));
-				navigate('/todos');
+				navigate(paths.todos);
 			})
 			.catch(console.error);
 	};
 
-	return <AuthLayout>
-		<Wrapper>
-			<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
-			<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
-			<Button width='100%' onClick={() => handleLogin(login, password)} >Login</Button>
-		</Wrapper>
-	</AuthLayout >;
+	return (
+		<>
+			<AuthLayout>
+				<Wrapper>
+					<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
+					<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
+					<Button width='100%' onClick={() => handleLogin(login, password)} >Login</Button>
+				</Wrapper>
+			</AuthLayout >
+		</>
+	);
 };
 
 export default LoginPage;
