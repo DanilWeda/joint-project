@@ -1,12 +1,21 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
+import { useAuth } from '../../hooks/useAuth';
 import AuthLayout from '../../Layout/Auth';
 import { paths } from '../../routes/index';
 import { BtnWrapper } from './StyledNewPage';
 
 
 const NewUserPage: FC = () => {
+	const { isAuth } = useAuth();
+	const navigate = useNavigate();
+
+	if (isAuth) {
+		navigate('/todos');
+	}
+
 	return (
 		<AuthLayout>
 			<BtnWrapper>
