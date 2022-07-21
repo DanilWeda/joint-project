@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
 	width: 100vw;
+	height: 80vh;
 	max-width: 100%;
 	display: flex;
 	justify-content: center;
@@ -41,5 +42,4 @@ export const BackButton = styled.button`
 	&:hover {
 		cursor: pointer;
 	};
-	display:${props => props.display};
 `;

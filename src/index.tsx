@@ -42,7 +42,7 @@ ReactDOM.render(
 				<ThemeProvider theme={theme}>
 					<Global />
 					<App />
-				</ThemeProvider>,
+				</ThemeProvider>
 			</Router>
 		</Provider>
 	</React.StrictMode>,
