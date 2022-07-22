@@ -16,7 +16,6 @@ export const Header = styled.div`
 `;
 
 export const UserName = styled.div`
-	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
@@ -35,13 +34,11 @@ export const Title = styled.p`
 	max-width: 1400px;
 	width: 100%;
 	text-align: center;
-	font-family: 'Roboto';
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
 	color: #000000;
 `;
-
 
 export const AddButton = styled.button`
 	width: 30px;
