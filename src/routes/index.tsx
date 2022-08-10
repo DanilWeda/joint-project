@@ -1,14 +1,13 @@
 
+import Private from 'hoc/PrivatePage';
+import Public from 'hoc/PublicPage';
 import { FC } from 'react';
 import { useRoutes } from 'react-router-dom';
-
-import Private from '../hoc/PrivatePage';
-import Public from '../hoc/PublicPage';
-import LoginPage from '../screens/LoginPage/LoginPage';
-import NewUserPage from '../screens/NewUserPage/NewUserPage';
-import NotFoundPage from '../screens/NotFoundPage';
-import SignUpPage from '../screens/SignUpPage/SignUpPage';
-import TodoPage from '../screens/TodoPage';
+import LoginPage from 'screens/LoginPage/LoginPage';
+import NewUserPage from 'screens/NewUserPage/NewUserPage';
+import NotFoundPage from 'screens/NotFoundPage';
+import SignUpPage from 'screens/SignUpPage/SignUpPage';
+import TodoPage from 'screens/TodoPage';
 
 
 

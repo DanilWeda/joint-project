@@ -1,7 +1,6 @@
 import { FC } from 'react';
+import SetupRoutes from 'routes/index';
 import styled from 'styled-components';
-
-import SetupRoutes from '../routes/index';
 
 const AppWrapper = styled.div`
   box-sizing: border-box;

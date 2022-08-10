@@ -1,8 +1,7 @@
+import { useAuth } from 'hooks/useAuth';
 import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-
-import { useAuth } from '../hooks/useAuth';
-import { paths } from '../routes/index';
+import { paths } from 'routes/index';
 
 interface IProps {
 	children: ReactNode

@@ -1,15 +1,15 @@
+import Button from 'components/Button';
+import CustomInput from 'components/CustomInput';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useForm } from 'hooks/useForm';
+import AuthLayout from 'Layout/Auth';
+import { IUser } from 'models/IUser';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { paths } from 'routes/index';
+import { setUser } from 'store/slices/userSlice/userSlice';
 
-import Button from '../../components/Button';
-import CustomInput from '../../components/CustomInput';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useForm } from '../../hooks/useForm';
-import AuthLayout from '../../Layout/Auth';
-import { IUser } from '../../models/IUser';
-import { paths } from '../../routes/index';
-import { setUser } from '../../store/slices/userSlice/userSlice';
 import { Wrapper } from './StyledLoginPage';
 
 

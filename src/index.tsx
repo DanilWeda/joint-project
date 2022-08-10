@@ -1,13 +1,12 @@
-import './firebase';
+import 'firebase';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import App from 'screens';
+import { setUpStore } from 'store/index';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-
-import App from './screens';
-import { setUpStore } from './store/index';
 
 const Global = createGlobalStyle`
 *{

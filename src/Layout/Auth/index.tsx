@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { paths } from 'routes/index';
+import { ReactComponent as Logo } from 'static/img/logo.svg';
 
-import { paths } from '../../routes/index';
-import { ReactComponent as Logo } from '../../static/img/logo.svg';
 import { BackButton, Root, Title, Wrapper } from './StyledAuth';
 import { IProps } from './types';;
 

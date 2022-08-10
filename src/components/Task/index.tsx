@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, MouseEvent, useEffect, useRef, useState } from 'react';
+import { ReactComponent as Check } from 'static/img/check.svg';
+import { ReactComponent as Dump } from 'static/img/dump.svg';
+import { ReactComponent as Pen } from 'static/img/pen.svg';
 
-import { ReactComponent as Check } from '../../static/img/check.svg';
-import { ReactComponent as Dump } from '../../static/img/dump.svg';
-import { ReactComponent as Pen } from '../../static/img/pen.svg';
 import { CheckButton, IconButton, IconWrapper, Input, InputWrapper, Wrapper } from './StyledCustomInput';
 import { IProps } from './types';
 

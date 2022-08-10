@@ -1,8 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { db } from 'firebase';
 import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
-
-import { db } from '../../../firebase';
-import { ITodo } from '../../../models/ITodo';
+import { ITodo } from 'models/ITodo';
 
 
 

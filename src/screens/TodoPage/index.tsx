@@ -1,16 +1,16 @@
 // import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import Task from 'components/Task';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { useAuth } from 'hooks/useAuth';
 import { ITodo } from 'models/ITodo';
 import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { ReactComponent as Logout } from 'static/img/logout.svg';
+import { ReactComponent as Plus } from 'static/img/plus.svg';
 import { createTodo, getTodos, updateTodo } from 'store/slices/todosSlice/action';
+import { resetUser } from 'store/slices/userSlice/userSlice';
 
-import Task from '../../components/Task';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useAuth } from '../../hooks/useAuth';
-import { ReactComponent as Logout } from '../../static/img/logout.svg';
-import { ReactComponent as Plus } from '../../static/img/plus.svg';
-import { resetUser } from '../../store/slices/userSlice/userSlice';
 import { AddButton, BtnWrapper, Header, LogoutButtom, Title, TodoWrapper, UserName, Wrapper } from './StyledTodoPage';
 
 
@@ -27,7 +27,7 @@ const TodoPage = () => {
 			await dispatch(createTodo(todo));
 			setReload(true);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [newTodo]);
 
 	useEffect(() => {

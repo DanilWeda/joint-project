@@ -1,10 +1,10 @@
+import Button from 'components/Button';
+import { useAuth } from 'hooks/useAuth';
+import AuthLayout from 'Layout/Auth';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { paths } from 'routes/index';
 
-import Button from '../../components/Button';
-import { useAuth } from '../../hooks/useAuth';
-import AuthLayout from '../../Layout/Auth';
-import { paths } from '../../routes/index';
 import { BtnWrapper } from './StyledNewPage';
 
 
