@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, MouseEvent, useState } from 'react';
+import { ChangeEvent, FC, MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { ReactComponent as Check } from '../../static/img/check.svg';
 import { ReactComponent as Dump } from '../../static/img/dump.svg';
@@ -7,9 +7,10 @@ import { CheckButton, IconButton, IconWrapper, Input, InputWrapper, Wrapper } fr
 import { IProps } from './types';
 
 
-const CustomInput: FC<IProps> = () => {
-	const [isComplete, setIsComplete] = useState(false);
-	const [text, setText] = useState('');
+const CustomInput: FC<IProps> = ({ value, completed, id, onChange }) => {
+	const [isComplete, setIsComplete] = useState(completed);
+	const [text, setText] = useState(value);
+	const editRef = useRef<HTMLInputElement>(null);
 
 
 	const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,13 +21,21 @@ const CustomInput: FC<IProps> = () => {
 		setIsComplete(!isComplete);
 	};
 
+	const handleEditClick = () => {
+		editRef.current?.focus();
+	};
+
+	useEffect(() => {
+		onChange({ text, completed: isComplete, id });
+	}, [text, isComplete]);
+
 	return (
 		<Wrapper>
 			<CheckButton onClick={(e) => checkHandler(e)} >{isComplete ? <Check /> : ''}</CheckButton>
 			<InputWrapper>
-				<Input onChange={(e) => changeHandler(e)} value={text} placeholder="Type your task..." />
+				<Input ref={editRef} onChange={changeHandler} value={text} placeholder="Type your task..." />
 				<IconWrapper>
-					<IconButton><Pen /></IconButton>
+					<IconButton><Pen onClick={handleEditClick} /></IconButton>
 					<IconButton><Dump /></IconButton>
 				</IconWrapper>
 			</InputWrapper>

@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,17 +10,18 @@ import AuthLayout from '../../Layout/Auth';
 import { IUser } from '../../models/IUser';
 import { paths } from '../../routes/index';
 import { setUser } from '../../store/slices/userSlice/userSlice';
-import { Wrapper } from './StyledSignUpPage';
+import { Wrapper } from './StyledLoginPage';
 
-const SignPage: FC = () => {
+
+const LoginPage: FC = () => {
 	const { login, password, changeLogin, changePassword } = useForm();
 	const dispatch = useAppDispatch();
 	const auth = getAuth();
 	const navigate = useNavigate();
 
 
-	const handlePassword = (email: string, password: string) => {
-		createUserWithEmailAndPassword(auth, email, password)
+	const handleLogin = (email: string, password: string) => {
+		signInWithEmailAndPassword(auth, email, password)
 			.then(({ user }) => {
 				// @ts-ignore
 				const { email, uid, accessToken } = user;
@@ -33,18 +34,20 @@ const SignPage: FC = () => {
 				dispatch(setUser(tmpUser));
 				navigate(paths.todos);
 			})
-			.catch(console.error);
+			.catch((error: any) => console.log);
 	};
 
 	return (
-		<AuthLayout>
-			<Wrapper>
-				<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
-				<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
-				<Button width='100%' onClick={() => handlePassword(login, password)}>Sign Up</Button>
-			</Wrapper>
-		</AuthLayout>
+		<>
+			<AuthLayout>
+				<Wrapper>
+					<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
+					<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
+					<Button width='100%' onClick={() => handleLogin(login, password)} >Login</Button>
+				</Wrapper>
+			</AuthLayout >
+		</>
 	);
 };
 
-export default SignPage;
+export default LoginPage;

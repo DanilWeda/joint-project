@@ -1,21 +1,52 @@
+// import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { ITodo } from 'models/ITodo';
+import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { createTodo, getTodos, updateTodo } from 'store/slices/todosSlice/action';
 
 import Task from '../../components/Task';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAuth } from '../../hooks/useAuth';
 import { ReactComponent as Logout } from '../../static/img/logout.svg';
 import { ReactComponent as Plus } from '../../static/img/plus.svg';
-import { resetUser } from '../../store/slices/userSlice';
-import { AddButton, BtnWrapper, Header, LogoutButtom, Title, TodoWrapper, UserName, Wrapper } from './StyledTodoPage';;
+import { resetUser } from '../../store/slices/userSlice/userSlice';
+import { AddButton, BtnWrapper, Header, LogoutButtom, Title, TodoWrapper, UserName, Wrapper } from './StyledTodoPage';
+
 
 const TodoPage = () => {
 	const { email } = useAuth();
 	const dispatch = useAppDispatch();
+	const { todos } = useAppSelector(state => state.todos);
+	const [reload, setReload] = useState<boolean>(false);
+	const { id } = useAuth();
+	const [newTodo, setNewTodo] = useState<Omit<ITodo, 'uid'>>({ text: '', completed: false, id: '' });
 
+	const handleCreateTodo = useCallback(
+		async (todo: ITodo) => {
+			await dispatch(createTodo(todo));
+			setReload(true);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [newTodo]);
+
+	useEffect(() => {
+		dispatch(getTodos(id!));
+	}, [reload]);
+
+	useEffect(() => {
+		dispatch(updateTodo({ ...newTodo, uid: id }));
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [newTodo.text, newTodo.completed]);
 
 	const handleLogout = () => {
 		dispatch(resetUser());
 		<Navigate to={'/'} />;
+	};
+
+	const handleOnChange = (todo: Omit<ITodo, 'uid'>) => {
+		setNewTodo(todo);
 	};
 
 	return (
@@ -28,10 +59,10 @@ const TodoPage = () => {
 				CURRENT TASKS
 			</Title>
 			<BtnWrapper>
-				<AddButton onClick={() => console.log('1')}><Plus /></AddButton>
+				<AddButton onClick={() => null}><Plus /></AddButton>
 			</BtnWrapper>
 			<TodoWrapper>
-				<Task />
+				{todos?.map(todo => <Task key={todo.id} id={todo.id!} completed={todo.completed} value={todo.text} onChange={handleOnChange} />)}
 			</TodoWrapper>
 		</Wrapper>
 	);
