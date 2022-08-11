@@ -1,4 +1,5 @@
 // import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import Loader from 'components/Loader';
 import Task from 'components/Task';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -17,11 +18,12 @@ import { AddButton, BtnWrapper, Header, LogoutButtom, Title, TodoWrapper, UserNa
 const TodoPage = () => {
 	const { email } = useAuth();
 	const dispatch = useAppDispatch();
-	const { todos } = useAppSelector(state => state.todos);
+	const { todos, loading } = useAppSelector(state => state.todos);
 	const [reload, setReload] = useState<boolean>(false);
 	const { id } = useAuth();
 	const [newTodo, setNewTodo] = useState<Omit<ITodo, 'uid'>>({ text: '', completed: false, id: '' });
 
+	// eslint-disable-next-line
 	const handleCreateTodo = useCallback(
 		async (todo: ITodo) => {
 			await dispatch(createTodo(todo));
@@ -32,6 +34,7 @@ const TodoPage = () => {
 
 	useEffect(() => {
 		dispatch(getTodos(id!));
+		// eslint-disable-next-line
 	}, [reload]);
 
 	useEffect(() => {
@@ -51,6 +54,7 @@ const TodoPage = () => {
 
 	return (
 		<Wrapper>
+			{loading && <Loader />}
 			<Header>
 				<UserName> {email}</UserName>
 				<LogoutButtom onClick={handleLogout}><Logout /></LogoutButtom>
@@ -62,7 +66,10 @@ const TodoPage = () => {
 				<AddButton onClick={() => null}><Plus /></AddButton>
 			</BtnWrapper>
 			<TodoWrapper>
-				{todos?.map(todo => <Task key={todo.id} id={todo.id!} completed={todo.completed} value={todo.text} onChange={handleOnChange} />)}
+				{!loading && !todos.length && <Title>Click on plus - create new task!</Title>}
+				{!loading &&
+					todos?.map(todo => <Task key={todo.id} id={todo.id!} completed={todo.completed} value={todo.text} onChange={handleOnChange} />)
+				}
 			</TodoWrapper>
 		</Wrapper>
 	);

@@ -27,6 +27,8 @@ const CustomInput: FC<IProps> = ({ value, completed, id, onChange }) => {
 
 	useEffect(() => {
 		onChange({ text, completed: isComplete, id });
+
+		// eslint-disable-next-line
 	}, [text, isComplete]);
 
 	return (

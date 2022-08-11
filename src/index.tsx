@@ -6,42 +6,17 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'screens';
 import { setUpStore } from 'store/index';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-
-const Global = createGlobalStyle`
-*{
-	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
-	font-family: 'Roboto', sans-serif;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	a {
-		text-decoration: none;
-		color: #000;
-		width: 100%;
-	}
-}
-`;
+import CustomThemeProvider from 'theme';
 
 const store = setUpStore();
-
-const theme = {
-	light: {
-		bgColor: '#000',
-	},
-	dark: {
-		bgColor: '#fff',
-	},
-};
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<Router>
-				<ThemeProvider theme={theme}>
-					<Global />
+				<CustomThemeProvider>
 					<App />
-				</ThemeProvider>
+				</CustomThemeProvider>
 			</Router>
 		</Provider>
 	</React.StrictMode>,

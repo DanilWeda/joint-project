@@ -1,11 +1,12 @@
 import Button from 'components/Button';
 import CustomInput from 'components/CustomInput';
+import Error from 'components/ErrorToast';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useForm } from 'hooks/useForm';
 import AuthLayout from 'Layout/Auth';
 import { IUser } from 'models/IUser';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from 'routes/index';
 import { setUser } from 'store/slices/userSlice/userSlice';
@@ -15,12 +16,17 @@ import { Wrapper } from './StyledLoginPage';
 
 const LoginPage: FC = () => {
 	const { login, password, changeLogin, changePassword } = useForm();
+	const [error, setError] = useState(false);
 	const dispatch = useAppDispatch();
 	const auth = getAuth();
 	const navigate = useNavigate();
 
+	useEffect(() => {
+		setError(false);
+	}, [login, password]);
 
-	const handleLogin = (email: string, password: string) => {
+	const handleLogin = (email: string, password: string) => () => {
+		if (!login || !password) setError(true);
 		signInWithEmailAndPassword(auth, email, password)
 			.then(({ user }) => {
 				// @ts-ignore
@@ -34,7 +40,7 @@ const LoginPage: FC = () => {
 				dispatch(setUser(tmpUser));
 				navigate(paths.todos);
 			})
-			.catch((error: any) => console.log);
+			.catch((error: any) => setError(true));
 	};
 
 	return (
@@ -43,7 +49,8 @@ const LoginPage: FC = () => {
 				<Wrapper>
 					<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
 					<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
-					<Button width='100%' onClick={() => handleLogin(login, password)} >Login</Button>
+					{error && <Error />}
+					<Button width='100%' onClick={handleLogin(login, password)} >Login</Button>
 				</Wrapper>
 			</AuthLayout >
 		</>

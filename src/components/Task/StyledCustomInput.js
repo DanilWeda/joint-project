@@ -28,9 +28,8 @@ export const Input = styled.input`
 	border: none;
 	background-color: inherit;
 	padding: 0.5rem;
-	&:focus {
-		border-radius: 15px;
-	}
+	outline: none;
+	pointer-events: none;
 `;
 
 export const CheckButton = styled.button`
