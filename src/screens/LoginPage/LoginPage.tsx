@@ -1,56 +1,54 @@
 import Button from 'components/Button';
 import CustomInput from 'components/CustomInput';
 import Error from 'components/ErrorToast';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import Loader from 'components/Loader';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { useAuth } from 'hooks/useAuth';
 import { useForm } from 'hooks/useForm';
 import AuthLayout from 'Layout/Auth';
-import { IUser } from 'models/IUser';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from 'routes/index';
-import { setUser } from 'store/slices/userSlice/userSlice';
+import { loginOrCreateUser } from 'store/slices/userSlice/action';
 
 import { Wrapper } from './StyledLoginPage';
 
 
 const LoginPage: FC = () => {
 	const { login, password, changeLogin, changePassword } = useForm();
-	const [error, setError] = useState(false);
+	const { loading, error } = useAppSelector(state => state.user);
 	const dispatch = useAppDispatch();
-	const auth = getAuth();
+	const [userError, setUserError] = useState(error);
 	const navigate = useNavigate();
+	const { isAuth } = useAuth();
 
 	useEffect(() => {
-		setError(false);
+		setUserError(false);
 	}, [login, password]);
 
-	const handleLogin = (email: string, password: string) => () => {
-		if (!login || !password) setError(true);
-		signInWithEmailAndPassword(auth, email, password)
-			.then(({ user }) => {
-				// @ts-ignore
-				const { email, uid, accessToken } = user;
+	useEffect(() => {
+		setUserError(error);
+	}, [error]);
 
-				const tmpUser: IUser = {
-					email,
-					id: uid,
-					token: accessToken,
-				};
-				dispatch(setUser(tmpUser));
-				navigate(paths.todos);
-			})
-			.catch((error: any) => setError(true));
+	const handleLogin = () => {
+		if (!login || !password) {
+			setUserError(true);
+			return;
+		}
+		dispatch(loginOrCreateUser({ uPassword: password, uEmail: login, isNewUser: false }));
+		if (isAuth) navigate(paths.todos);
 	};
 
 	return (
 		<>
+			{loading && <Loader />}
 			<AuthLayout>
 				<Wrapper>
 					<CustomInput type='text' placeholder='Login' value={login} onChange={changeLogin} />
 					<CustomInput type='password' placeholder='Password' value={password} onChange={changePassword} />
-					{error && <Error />}
-					<Button width='100%' onClick={handleLogin(login, password)} >Login</Button>
+					{userError && <Error />}
+					<Button width='100%' onClick={handleLogin} >Login</Button>
 				</Wrapper>
 			</AuthLayout >
 		</>

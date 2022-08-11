@@ -33,12 +33,10 @@ export const updateTodo = createAsyncThunk(
 export const getTodos = createAsyncThunk(
 	'todo/getAll',
 	async (uid: string, thunkApi) => {
-		console.log(uid);
 		try {
 			const docSnap = await getDocs(collection(db, 'todos'));
 			const data: ITodo[] = [];
 			docSnap.forEach(doc => {
-				console.log(doc);
 				// @ts-ignore
 				doc.data() && doc.data().uid === uid && data.push({ ...doc.data(), id: doc.id });
 			});

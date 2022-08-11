@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from 'models/IUser';
 
+import { loginOrCreateUser } from './action';
+
 
 interface userState {
 	user: IUser
+	loading: boolean;
+	error: boolean;
 };
 
 const user = window.localStorage.getItem('user');
@@ -15,16 +19,14 @@ const initialState: userState = {
 		id: validUser?.id || null,
 		token: validUser?.token || null,
 	},
+	loading: false,
+	error: false,
 };
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUser: (state, action: PayloadAction<IUser>) => {
-			window.localStorage.setItem('user', JSON.stringify(action.payload));
-			state.user = action.payload;
-		},
 		resetUser: (state) => {
 			window.localStorage.clear();
 			const resetUserObj: IUser = {
@@ -35,8 +37,24 @@ const userSlice = createSlice({
 			state.user = resetUserObj;
 		},
 	},
+	extraReducers: {
+		[loginOrCreateUser.pending.type]: (state) => {
+			state.error = false;
+			state.loading = true;
+		},
+		[loginOrCreateUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+			state.user.email = action.payload.email;
+			state.user.id = action.payload.id;
+			state.user.token = action.payload.token;
+			state.loading = false;
+		},
+		[loginOrCreateUser.rejected.type]: (state) => {
+			state.loading = false;
+			state.error = true;
+		},
+	},
 });
 
 
-export const { setUser, resetUser } = userSlice.actions;
+export const { resetUser } = userSlice.actions;
 export default userSlice.reducer;
