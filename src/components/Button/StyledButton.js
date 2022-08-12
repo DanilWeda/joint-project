@@ -1,21 +1,33 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+	a {
+		text-decoration: none;
+		text-align: center;
+	}
+`;
+
 export const StyledButton = styled.button`
-	width: ${props => props.width || 'auto'};
-	color: ${props => props.color} ;
-	border: 1px solid #000000;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	color: ${({ theme }) => theme.colorBlack} ;
+	border: 1px solid ${({ theme }) => theme.colorBlack};
 	box-sizing: border-box;
 	border-radius: 5px;
 	font-size: 18px;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 	padding: 1rem 2.5rem;
 	background-color: transparent;
 	cursor: pointer;
 	min-width: 12rem;
-	transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+	transition: ${({ theme }) => theme.btnTransition};
+	box-shadow: ${({ theme }) => theme.shadow};
+	text-align: center;
 
 	&:hover {
-		transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-		background-color: #C9EEFF;
+		transition: ${({ theme }) => theme.btnTransition};
+		background-color: ${({ theme }) => theme.colorPrimary};
+		border: 1px solid ${({ theme }) => theme.colorPrimary};
 	}
 `;

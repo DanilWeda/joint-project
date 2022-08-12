@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from 'screens';
 import { setUpStore } from 'store/index';
-import CustomThemeProvider from 'theme';
+import CustomThemeProvider from 'themes';
 
 const store = setUpStore();
 

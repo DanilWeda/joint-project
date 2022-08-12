@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
 	width: 100vw;
 	height: 100vh;
 	font-size: 3rem;
-	background-color: #000;
-	color: #ccc;
+	background-color: ${({ theme }) => theme.colorBlack};
+	color: ${({ theme }) => theme.colorWhite};
 	top: 0;
 	left: 0;
 	opacity: 0.222;

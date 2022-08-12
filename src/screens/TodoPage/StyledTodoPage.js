@@ -19,7 +19,7 @@ export const UserName = styled.div`
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
-	color: #000000;
+	color: ${({ theme }) => theme.colorBlack};
 `;
 
 export const LogoutButtom = styled.button`
@@ -37,7 +37,7 @@ export const Title = styled.p`
 	font-style: normal;
 	font-weight: 500;
 	font-size: 20px;
-	color: #000000;
+	color: ${({ theme }) => theme.colorBlack};
 `;
 
 export const AddButton = styled.button`

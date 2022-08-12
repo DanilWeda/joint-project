@@ -6,8 +6,9 @@ export const ErrorWrapper = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-size: 14px;
-	color: ${props => props.theme.static.error};
+	color: ${({ theme }) => theme.colorError};
 `;
+
 export const ErrorText = styled.p`
 	padding-left: 1rem;
 `;

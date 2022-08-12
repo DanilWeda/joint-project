@@ -13,7 +13,7 @@ export const InputWrapper = styled.div`
 	box-sizing: border-box;
 	border-radius: 15px;
 	font-size: 1rem;
-	border: 1px solid #000000;
+	border: 1px solid ${({ theme }) => theme.colorBlack};
 	flex-grow: 0.2;
 	margin-left: 1rem;
 	align-items: center;
@@ -36,7 +36,7 @@ export const CheckButton = styled.button`
 	width: 30px;
 	height: 30px;
 	background: inherit;
-	border: 1px solid #000;
+	border: 1px solid ${({ theme }) => theme.colorBlack};
 	cursor: pointer;
 	border-radius: 50%;
 	padding-top: 0.3rem;
