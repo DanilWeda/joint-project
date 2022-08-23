@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { db } from 'firebase';
-import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { ITodo } from 'models/ITodo';
 
 
@@ -24,6 +24,18 @@ export const updateTodo = createAsyncThunk(
 			const { id, completed, text } = todo;
 			const updateTodoRef = doc(db, 'todos', id!);
 			await updateDoc(updateTodoRef, { text, completed });
+		} catch (error) {
+			return thunkApi.rejectWithValue('Faileture');
+		}
+	},
+);
+
+export const deleteTodo = createAsyncThunk(
+	'todo/delete',
+	async (id: string, thunkApi) => {
+		try {
+			const updateTodoRef = doc(db, 'todos', id!);
+			await deleteDoc(updateTodoRef);
 		} catch (error) {
 			return thunkApi.rejectWithValue('Faileture');
 		}

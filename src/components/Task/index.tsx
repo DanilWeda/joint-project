@@ -1,4 +1,7 @@
-import { ChangeEvent, FC, MouseEvent, useEffect, useRef, useState } from 'react';
+import AddOrEditPopup from 'components/AddOrEditPopup';
+import RemovePopup from 'components/RemovePopup';
+import { ITodo } from 'models/ITodo';
+import { FC, useEffect, useState } from 'react';
 import { ReactComponent as Check } from 'static/img/check.svg';
 import { ReactComponent as Dump } from 'static/img/dump.svg';
 import { ReactComponent as Pen } from 'static/img/pen.svg';
@@ -7,42 +10,67 @@ import { CheckButton, IconButton, IconWrapper, Input, InputWrapper, Wrapper } fr
 import { IProps } from './types';
 
 
-const CustomInput: FC<IProps> = ({ value, completed, id, onChange }) => {
+const Task: FC<IProps> = ({ value, completed, id, onEdit, completedSwitcher, onRemove }) => {
 	const [isComplete, setIsComplete] = useState(completed);
-	const [text, setText] = useState(value);
-	const editRef = useRef<HTMLInputElement>(null);
+	const [openPopup, setOpenPopup] = useState(false);
+	const [openRemovePopup, setOpenRemovePopup] = useState(false);
+	const [changedTask, setChangedTask] = useState<Omit<ITodo, 'uid'>>({ completed, text: value, id });
 
-
-	const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		setText(e.target.value);
-	};
-
-	const checkHandler = (e: MouseEvent<HTMLButtonElement>) => {
+	const checkHandler = () => {
 		setIsComplete(!isComplete);
 	};
 
 	const handleEditClick = () => {
-		editRef.current?.focus();
+		setOpenPopup(true);
+	};
+
+	const handleCloseEditClick = () => {
+		setOpenPopup(false);
+	};
+
+	const handleEditChange = (changedText: string) => {
+		setChangedTask(oldTask => ({ ...oldTask, text: changedText }));
+	};
+
+	const handleUpdateClick = () => {
+		onEdit(changedTask);
+	};
+
+	const handleOpenRemoveClick = () => {
+		setOpenRemovePopup(true);
+	};
+
+	const handleCloseRemoveClick = () => {
+		setOpenRemovePopup(false);
 	};
 
 	useEffect(() => {
-		onChange({ text, completed: isComplete, id });
-
-		// eslint-disable-next-line
-	}, [text, isComplete]);
+		completedSwitcher(id, isComplete);
+	}, [isComplete]);
 
 	return (
-		<Wrapper>
-			<CheckButton onClick={(e) => checkHandler(e)} >{isComplete ? <Check /> : ''}</CheckButton>
-			<InputWrapper>
-				<Input ref={editRef} onChange={changeHandler} value={text} placeholder="Type your task..." />
-				<IconWrapper>
-					<IconButton><Pen onClick={handleEditClick} /></IconButton>
-					<IconButton><Dump /></IconButton>
-				</IconWrapper>
-			</InputWrapper>
-		</Wrapper>
-
+		<>
+			<AddOrEditPopup
+				isEdit={true}
+				value={value}
+				onChange={handleEditChange}
+				open={openPopup}
+				onClose={handleCloseEditClick}
+				onEdit={handleUpdateClick}
+			/>
+			<RemovePopup onRemove={onRemove(id)} open={openRemovePopup} onClose={handleCloseRemoveClick} />
+			<Wrapper>
+				<CheckButton onClick={checkHandler} >{isComplete ? <Check /> : ''}</CheckButton>
+				<InputWrapper>
+					<Input defaultValue={value} placeholder="Type your task..." />
+					<IconWrapper>
+						<IconButton><Pen onClick={handleEditClick} /></IconButton>
+						<IconButton><Dump onClick={handleOpenRemoveClick} /></IconButton>
+					</IconWrapper>
+				</InputWrapper>
+			</Wrapper>
+		</>
 	);
 };
-export default CustomInput;
+
+export default Task;

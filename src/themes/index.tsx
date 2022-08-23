@@ -15,6 +15,7 @@ declare module 'styled-components' {
 		colorError: string;
 		colorCancel: string;
 		colorAccept: string;
+		colorAcceptLight: string;
 		shadow: string;
 		btnTransition: string;
 	}

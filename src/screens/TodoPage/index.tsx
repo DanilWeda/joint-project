@@ -1,4 +1,4 @@
-// import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import AddOrEditPopup from 'components/AddOrEditPopup';
 import Loader from 'components/Loader';
 import Task from 'components/Task';
 import { useAppDispatch } from 'hooks/useAppDispatch';
@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ReactComponent as Logout } from 'static/img/logout.svg';
 import { ReactComponent as Plus } from 'static/img/plus.svg';
-import { createTodo, getTodos, updateTodo } from 'store/slices/todosSlice/action';
+import { createTodo, deleteTodo, getTodos, updateTodo } from 'store/slices/todosSlice/action';
 import { resetUser } from 'store/slices/userSlice/userSlice';
 
 import { AddButton, BtnWrapper, Header, LogoutButtom, Title, TodoWrapper, UserName, Wrapper } from './StyledTodoPage';
@@ -21,14 +21,16 @@ const TodoPage = () => {
 	const { todos, loading } = useAppSelector(state => state.todos);
 	const [reload, setReload] = useState<boolean>(false);
 	const { id } = useAuth();
-	const [newTodo, setNewTodo] = useState<Omit<ITodo, 'uid'>>({ text: '', completed: false, id: '' });
+	const [newTodo, setNewTodo] = useState<Omit<ITodo, 'id'>>({ text: '', completed: false, uid: id });
+	const [openPopup, setOpenPopup] = useState(false);
 
 	// eslint-disable-next-line
 	const handleCreateTodo = useCallback(
-		async (todo: ITodo) => {
-			await dispatch(createTodo(todo));
-			setReload(true);
-
+		async () => {
+			if (newTodo.text) {
+				await dispatch(createTodo(newTodo));
+				setReload(true);
+			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [newTodo]);
 
@@ -37,23 +39,52 @@ const TodoPage = () => {
 		// eslint-disable-next-line
 	}, [reload]);
 
-	useEffect(() => {
-		dispatch(updateTodo({ ...newTodo, uid: id }));
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [newTodo.text, newTodo.completed]);
-
 	const handleLogout = () => {
 		dispatch(resetUser());
 		<Navigate to={'/'} />;
 	};
 
-	const handleOnChange = (todo: Omit<ITodo, 'uid'>) => {
-		setNewTodo(todo);
+	const handleOnChange = (text: string) => {
+		if (id) {
+			setNewTodo({
+				text,
+				completed: false,
+				uid: id,
+			});
+		}
 	};
+
+	const handleOnEdit = async (todo: Omit<ITodo, 'uid'>) => {
+		await dispatch(updateTodo({ ...todo, uid: id }));
+		setReload(true);
+	};
+
+	const onSwitchCompleted = async (id: string, status: boolean) => {
+		const todo = todos.find(todo => todo.id === id);
+		if (todo) await dispatch(updateTodo({ ...todo, completed: status }));
+	};
+
+	const onRemoveTask = (id: string) => async () => {
+		await dispatch(deleteTodo(id));
+		setReload(true);
+	};
+
+	const handleOpenPopup = () => {
+		setOpenPopup(true);
+	};
+
+	const handleClosePopup = () => {
+		setOpenPopup(false);
+	};
+
 
 	return (
 		<Wrapper>
+			<AddOrEditPopup onChange={handleOnChange} onCreate={handleCreateTodo} open={openPopup} onClose={handleClosePopup}>
+				<Title>
+					CURRENT TASKS
+				</Title>
+			</AddOrEditPopup>
 			{loading && <Loader />}
 			<Header>
 				<UserName> {email}</UserName>
@@ -63,12 +94,22 @@ const TodoPage = () => {
 				CURRENT TASKS
 			</Title>
 			<BtnWrapper>
-				<AddButton onClick={() => null}><Plus /></AddButton>
+				<AddButton onClick={handleOpenPopup}><Plus /></AddButton>
 			</BtnWrapper>
 			<TodoWrapper>
 				{!loading && !todos.length && <Title>Click on plus - create new task!</Title>}
 				{!loading &&
-					todos?.map(todo => <Task key={todo.id} id={todo.id!} completed={todo.completed} value={todo.text} onChange={handleOnChange} />)
+					todos?.map(todo =>
+						<Task
+							key={todo.id}
+							id={todo.id!}
+							completedSwitcher={onSwitchCompleted}
+							completed={todo.completed}
+							value={todo.text}
+							onEdit={handleOnEdit}
+							onRemove={onRemoveTask}
+						/>,
+					)
 				}
 			</TodoWrapper>
 		</Wrapper>

@@ -7,4 +7,5 @@ export const Input = styled.input`
 	border: 1px solid ${({ theme }) => theme.colorBlack};
 	background: ${({ theme }) => theme.colorWhite};
 	padding: 0.8rem;
+	box-shadow: ${({ theme }) => theme.shadow};
 `;

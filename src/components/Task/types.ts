@@ -4,5 +4,7 @@ export interface IProps {
 	id: string;
 	value: string;
 	completed: boolean;
-	onChange(todo: Omit<ITodo, 'uid'>): void;
+	onEdit(todo: Omit<ITodo, 'uid'>): void;
+	completedSwitcher(id: string, status: boolean): void;
+	onRemove(id: string): () => void;
 }
