@@ -28,7 +28,6 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		resetUser: (state) => {
-			window.localStorage.clear();
 			const resetUserObj: IUser = {
 				email: null,
 				id: null,

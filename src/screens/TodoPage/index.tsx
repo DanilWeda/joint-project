@@ -41,6 +41,7 @@ const TodoPage = () => {
 
 	const handleLogout = () => {
 		dispatch(resetUser());
+		window.localStorage.clear();
 		<Navigate to={'/'} />;
 	};
 
