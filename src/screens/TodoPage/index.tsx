@@ -29,7 +29,7 @@ const TodoPage = () => {
 		async () => {
 			if (newTodo.text) {
 				await dispatch(createTodo(newTodo));
-				setReload(true);
+				setReload(!reload);
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [newTodo]);
@@ -56,7 +56,7 @@ const TodoPage = () => {
 
 	const handleOnEdit = async (todo: Omit<ITodo, 'uid'>) => {
 		await dispatch(updateTodo({ ...todo, uid: id }));
-		setReload(true);
+		setReload(!reload);
 	};
 
 	const onSwitchCompleted = async (id: string, status: boolean) => {
@@ -64,9 +64,10 @@ const TodoPage = () => {
 		if (todo) await dispatch(updateTodo({ ...todo, completed: status }));
 	};
 
-	const onRemoveTask = (id: string) => async () => {
+	const onRemoveTask = (id: string) => async (hide?: boolean) => {
+		if (hide) window.localStorage.setItem('hideremove', JSON.stringify(true));
 		await dispatch(deleteTodo(id));
-		setReload(true);
+		setReload(!reload);
 	};
 
 	const handleOpenPopup = () => {

@@ -24,6 +24,7 @@ const AddOrEditPopup: FC<IProps> = ({ open, onClose, onChange, onCreate, value, 
 			setText('');
 			onChange('');
 		}
+		onClose();
 	};
 
 	const handleCancelClick = () => {

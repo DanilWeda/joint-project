@@ -16,6 +16,8 @@ const Task: FC<IProps> = ({ value, completed, id, onEdit, completedSwitcher, onR
 	const [openRemovePopup, setOpenRemovePopup] = useState(false);
 	const [changedTask, setChangedTask] = useState<Omit<ITodo, 'uid'>>({ completed, text: value, id });
 
+	const removeItem = onRemove(id);
+
 	const checkHandler = () => {
 		setIsComplete(!isComplete);
 	};
@@ -36,9 +38,15 @@ const Task: FC<IProps> = ({ value, completed, id, onEdit, completedSwitcher, onR
 		onEdit(changedTask);
 	};
 
+
 	const handleOpenRemoveClick = () => {
-		setOpenRemovePopup(true);
+		if (!window.localStorage.getItem('hideremove')) {
+			setOpenRemovePopup(true);
+			return;
+		}
+		removeItem();
 	};
+
 
 	const handleCloseRemoveClick = () => {
 		setOpenRemovePopup(false);
@@ -58,7 +66,7 @@ const Task: FC<IProps> = ({ value, completed, id, onEdit, completedSwitcher, onR
 				onClose={handleCloseEditClick}
 				onEdit={handleUpdateClick}
 			/>
-			<RemovePopup onRemove={onRemove(id)} open={openRemovePopup} onClose={handleCloseRemoveClick} />
+			<RemovePopup onRemove={removeItem} open={openRemovePopup} onClose={handleCloseRemoveClick} />
 			<Wrapper>
 				<CheckButton onClick={checkHandler} >{isComplete ? <Check /> : ''}</CheckButton>
 				<InputWrapper>

@@ -4,5 +4,5 @@ export interface IProps {
 	open: boolean;
 	children?: ReactNode;
 	onClose(): void;
-	onRemove(): void;
+	onRemove(hide?: boolean): void;
 }

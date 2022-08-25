@@ -14,6 +14,11 @@ const RemovePopup: FC<IProps> = ({ open, onClose, onRemove }) => {
 		setConfirmHide(!confirmHide);
 	};
 
+	const removeHandler = () => {
+		onRemove(confirmHide);
+		onClose();
+	};
+
 	return (
 		<Modal open={open} onClose={onClose}>
 			<Wrapper>
@@ -39,7 +44,7 @@ const RemovePopup: FC<IProps> = ({ open, onClose, onRemove }) => {
 				</ConfirmHideWrapper>
 				<BtnWrapper>
 					<Button onClick={onClose} color="cancel">Cancel</Button>
-					<Button onClick={onRemove}>{'Remove'}</Button>
+					<Button onClick={removeHandler}>{'Remove'}</Button>
 				</BtnWrapper>
 			</Wrapper>
 		</Modal>
